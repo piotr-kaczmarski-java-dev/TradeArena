@@ -1,0 +1,15 @@
+#!/bin/bash
+set -euo pipefail
+
+psql -v ON_ERROR_STOP=1 --username "$POSTGRES_USER" --dbname postgres <<-EOSQL
+  CREATE ROLE portfolio LOGIN PASSWORD '${PORTFOLIO_DB_PASSWORD}';
+  CREATE DATABASE portfolio OWNER portfolio;
+  REVOKE CONNECT ON DATABASE portfolio FROM PUBLIC;
+
+  CREATE ROLE trading LOGIN PASSWORD '${TRADING_DB_PASSWORD}';
+  CREATE DATABASE trading OWNER trading;
+  REVOKE CONNECT ON DATABASE trading FROM PUBLIC;
+
+  CREATE ROLE keycloak LOGIN PASSWORD '${KEYCLOAK_DB_PASSWORD}';
+  CREATE DATABASE keycloak OWNER keycloak;
+EOSQL
