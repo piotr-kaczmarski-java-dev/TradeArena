@@ -14,11 +14,11 @@ Services:
 3. **Keycloak** - dev mode is fine for now; you'll configure the realm in Phase 4.
 
 Acceptance:
-- [ ] `docker compose up -d` → all containers healthy (`docker compose ps`)
-- [ ] You can connect to PostgreSQL from your host (`psql` or IntelliJ)
-- [ ] You can create a topic and produce/consume a message with the Kafka CLI tools inside the container
-- [ ] Keycloak admin console opens in the browser
-- [ ] No passwords committed as real secrets - use a `.env` file (already in `.gitignore`) with a committed `.env.example`
+- [x] `docker compose up -d` → all containers healthy (`docker compose ps`)
+- [x] You can connect to PostgreSQL from your host (`psql` or IntelliJ)
+- [x] You can create a topic and produce/consume a message with the Kafka CLI tools inside the container
+- [x] Keycloak admin console opens in the browser
+- [x] No passwords committed as real secrets - use a `.env` file (already in `.gitignore`) with a committed `.env.example`
 
 Questions you should be able to answer afterwards (the assistant will ask):
 - Why does Kafka need two listeners (or advertised listeners) to work from both the host and other containers?

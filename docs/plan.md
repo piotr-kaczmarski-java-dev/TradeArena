@@ -8,7 +8,7 @@ Rough pace: ~10-12 hours a week. **Phases 0-3 carry most of the value; start app
 
 - [x] Maven multi-module skeleton, health endpoints, smoke tests (assistant)
 - [x] Learning framework: CLAUDE.md, docs, ADRs, session commands (assistant)
-- [ ] `compose.yaml`: PostgreSQL, Kafka (KRaft), Keycloak - **by Piotr** → `docs/tasks/phase-0.md`
+- [x] `compose.yaml`: PostgreSQL, Kafka (KRaft), Keycloak - **by Piotr** → `docs/tasks/phase-0.md`
 - [ ] GitHub Actions CI: build + test on every push - **by Piotr** → `docs/tasks/phase-0.md`
 - [ ] Repo on GitHub, linked from the profile README
 
