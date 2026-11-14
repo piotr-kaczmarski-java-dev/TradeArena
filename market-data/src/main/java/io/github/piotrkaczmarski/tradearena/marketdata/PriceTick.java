@@ -5,8 +5,6 @@ import java.math.RoundingMode;
 import java.time.Instant;
 import java.util.Objects;
 
-import org.springframework.util.StringUtils;
-
 public record PriceTick(
         String instrument,
         BigDecimal price,
