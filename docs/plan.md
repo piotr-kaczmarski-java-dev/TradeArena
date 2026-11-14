@@ -4,7 +4,7 @@ Learning-first: each phase lists what Piotr should be able to **explain, build a
 
 Rough pace: ~10-12 hours a week. **Phases 0-3 carry most of the value; start applying for jobs after Phase 2.**
 
-## Phase 0 - Skeleton (week 1) ← current
+## Phase 0 - Skeleton (week 1)
 
 - [x] Maven multi-module skeleton, health endpoints, smoke tests (assistant)
 - [x] Learning framework: CLAUDE.md, docs, ADRs, session commands (assistant)
@@ -14,7 +14,7 @@ Rough pace: ~10-12 hours a week. **Phases 0-3 carry most of the value; start app
 
 **Can explain:** Maven multi-module and the Spring Boot BOM; Compose services, volumes, healthchecks, networking; what KRaft replaced; a CI pipeline's stages and caching.
 
-## Phase 1 - Prices (week 2)
+## Phase 1 - Prices (week 2) ← current → `docs/tasks/phase-1.md`
 
 - [ ] `market-data`: price simulator (random walk with drift and volatility, occasional shocks)
 - [ ] Kafka producer: `prices` topic, key = instrument, JSON or Avro serialization (decide in an ADR)
