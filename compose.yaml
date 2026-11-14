@@ -8,7 +8,7 @@ services:
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?Provide postgres password}
       PORTFOLIO_DB_PASSWORD: ${PORTFOLIO_DB_PASSWORD:?Provide portfolio app db password}
       TRADING_DB_PASSWORD: ${TRADING_DB_PASSWORD:?Provide trading app db password}
-      KEYCLOAK_DB_PASSWORD: ${KEYCLOAK_DB_PASSWORD}
+      KEYCLOAK_DB_PASSWORD: ${KEYCLOAK_DB_PASSWORD:?Provide keycloak db password}
     ports:
       - "5432:5432"
     volumes:

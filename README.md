@@ -1,5 +1,7 @@
 # TradeArena
 
+[![CI](https://github.com/piotr-kaczmarski-java-dev/TradeArena/actions/workflows/ci.yml/badge.svg)](https://github.com/piotr-kaczmarski-java-dev/TradeArena/actions/workflows/ci.yml)
+
 A multiplayer **stock-market trading game**: simulated prices move in real time, players trade with each other through a real **order book and matching engine**, bots provide liquidity, and a leaderboard ranks portfolio value.
 
 > 🚧 **Work in progress** - currently in Phase 0 (skeleton). See [`docs/plan.md`](docs/plan.md).
