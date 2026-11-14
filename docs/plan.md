@@ -10,7 +10,7 @@ Rough pace: ~10-12 hours a week. **Phases 0-3 carry most of the value; start app
 - [x] Learning framework: CLAUDE.md, docs, ADRs, session commands (assistant)
 - [x] `compose.yaml`: PostgreSQL, Kafka (KRaft), Keycloak - **by Piotr** → `docs/tasks/phase-0.md`
 - [x] GitHub Actions CI: build + test on every push - **by Piotr** → `docs/tasks/phase-0.md`
-- [ ] Repo on GitHub, linked from the profile README
+- [x] Repo on GitHub, linked from the profile README
 
 **Can explain:** Maven multi-module and the Spring Boot BOM; Compose services, volumes, healthchecks, networking; what KRaft replaced; a CI pipeline's stages and caching.
 
