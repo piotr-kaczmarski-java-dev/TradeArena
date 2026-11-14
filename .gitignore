@@ -3,10 +3,13 @@ target/
 !.mvn/wrapper/maven-wrapper.properties
 
 # IDE
+.classpath
 .idea/
 *.iml
 .vscode/
+.project
 *.swp
+.settings/
 
 # OS
 .DS_Store
