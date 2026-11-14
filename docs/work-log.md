@@ -28,3 +28,11 @@ This log is a deliverable: revision notes before interviews, and the honest answ
 - Interview question this answers: "Your app connects to Kafka from the host but fails to produce/consume (or works on the host but not from a container) - why?"
 - Rejected from AI suggestions, and why: nothing rejected. The assistant flagged a likely permission problem on the Kafka data volume; I didn't change anything, it just worked (a named volume copies the image's directory ownership).
 - Next: Phase 0 Task 2 - GitHub Actions CI. Then add `:?` fail-fast to the remaining `.env` variables.
+
+## 2026-11-14 - GitHub Actions CI
+- Built: a GitHub CI workflow with jobs and steps that builds and verifies the Maven project. Also `:?` fail-fast on the last `.env` variable in `compose.yaml` and the CI badge in the README.
+- Written by me / by the assistant: the whole `ci.yml` was done by me (plus the compose fix and the badge). Assistant: explanations (cache keys, jobs vs steps), two review rounds.
+- Learned: how the GitHub cache works and how the ephemeral builds differ from the Jenkins approach.
+- Interview question this answers: "Walk me through your CI pipeline: what triggers it, how do you keep it fast (cache key design), and how do you debug a failure that only happens on CI?"
+- Rejected from AI suggestions, and why: nothing rejected, but I went beyond them: my own concurrency setup (cancel superseded runs only on PRs, one group per commit on `main`) and a `timeout-minutes` that wasn't suggested.
+- Next: fix the Mockito self-attach warning (Surefire `argLine` + `dependency:properties`); link the repo from my GitHub profile README; then Phase 1 - price simulator and the first Kafka producer.

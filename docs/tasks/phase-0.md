@@ -31,11 +31,11 @@ Questions you should be able to answer afterwards (the assistant will ask):
 **Goal:** every push and pull request builds the project and runs the tests.
 
 Requirements:
-- [ ] Triggers on push and pull_request
-- [ ] Sets up JDK 25 (Temurin)
-- [ ] Caches the Maven repository
-- [ ] Runs `./mvnw -B verify`
-- [ ] Green badge in the README
+- [x] Triggers on push and pull_request
+- [x] Sets up JDK 25 (Temurin)
+- [x] Caches the Maven repository
+- [x] Runs `./mvnw -B verify`
+- [x] Green badge in the README
 
 Stretch (later phases will need it): Testcontainers works on GitHub's Ubuntu runners out of the box - think about why.
 
