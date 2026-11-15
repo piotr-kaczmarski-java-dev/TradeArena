@@ -36,3 +36,11 @@ This log is a deliverable: revision notes before interviews, and the honest answ
 - Interview question this answers: "Walk me through your CI pipeline: what triggers it, how do you keep it fast (cache key design), and how do you debug a failure that only happens on CI?"
 - Rejected from AI suggestions, and why: nothing rejected, but I went beyond them: my own concurrency setup (cancel superseded runs only on PRs, one group per commit on `main`) and a `timeout-minutes` that wasn't suggested.
 - Next: fix the Mockito self-attach warning (Surefire `argLine` + `dependency:properties`); link the repo from my GitHub profile README; then Phase 1 - price simulator and the first Kafka producer.
+
+## 2026-11-15 - Mockito javaagent, PriceTick event record
+- Built: fixed the Mockito self-attach warning, and added the `PriceTick` record and its unit tests.
+- Written by me / by the assistant: I wrote all the code. Assistant: the Phase 1 tasks file (`docs/tasks/phase-1.md`), explanations and review rounds.
+- Learned: proper data types for common fields like `Instant` and `BigDecimal`, and the considerations behind them - e.g. `BigDecimal.equals` checks the scale (`100.0` != `100.00`), `compareTo` doesn't. Better naming and structure for unit tests, and how to construct a simple record.
+- Interview question this answers: "How do you represent money or prices in Java, and what's the catch with `BigDecimal.equals` in a `HashMap` or a record?" Also: "Mockito warns about self-attaching - why, and how do you fix it?"
+- Rejected from AI suggestions, and why: nothing.
+- Next: remove the leftover `StringUtils` import from `PriceTick`; then Phase 1 Task 1 - the price simulator (injected `RandomGenerator` and `Clock`, rounding to 2 decimals in the simulator).
