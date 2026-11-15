@@ -44,3 +44,11 @@ This log is a deliverable: revision notes before interviews, and the honest answ
 - Interview question this answers: "How do you represent money or prices in Java, and what's the catch with `BigDecimal.equals` in a `HashMap` or a record?" Also: "Mockito warns about self-attaching - why, and how do you fix it?"
 - Rejected from AI suggestions, and why: nothing.
 - Next: remove the leftover `StringUtils` import from `PriceTick`; then Phase 1 Task 1 - the price simulator (injected `RandomGenerator` and `Clock`, rounding to 2 decimals in the simulator).
+
+## 2026-11-15 - GBM price step
+- Built: a simulator for Geometric Brownian Motion, with a test suite.
+- Written by me / by the assistant: I wrote everything based on the assistant's advice. Assistant: explanations (normal distribution, log returns, square-root-of-time rule, floating-point underflow) and three review rounds.
+- Learned: how GBM works and different methods to implement a simulation for it, especially how the choice of time step can influence the implementation.
+- Interview question this answers: "Why do price models use log returns, and why does volatility scale with the square root of time?" Also: "What are NaN, overflow and underflow in `double`, and how do you guard numeric code against them?"
+- Rejected from AI suggestions, and why: nothing.
+- Next: continue Task 1 - a class holding the instruments, their current prices and an injected `RandomGenerator` (test: same seed gives the same sequence); then drift, shocks, and what happens when a tiny price rounds to `0.00` in `PriceTick`.
