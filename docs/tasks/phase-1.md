@@ -41,6 +41,7 @@ Consider: schema evolution, a schema registry as one more piece of infrastructur
 Acceptance:
 - [ ] `docker compose up -d`, `./mvnw -pl market-data spring-boot:run` → ticks visible with `kafka-console-consumer --property print.key=true --property print.partition=true`
 - [ ] The same instrument always lands on the same partition (check it, don't assume it)
+- [ ] Golden-file test for `PriceTick` (ADR 0003): a sample `price-tick-v1.json` in test resources; every stored sample still deserializes with all its fields and types; an extra unknown field is ignored, a missing required field fails
 
 ## Task 4 - A consumer that logs ticks (`portfolio`)
 

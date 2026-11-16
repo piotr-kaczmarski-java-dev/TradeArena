@@ -24,4 +24,6 @@
 | trading | 8082 | orders, order books, trades | Kafka (`orders`, `trades`), PostgreSQL |
 | portfolio | 8083 | cash, positions, leaderboard | Kafka (`prices`, `trades`), PostgreSQL, Redis |
 
+Kafka events are versioned JSON records; evolution rules and golden-file tests are in [ADR 0003](adr/0003-json-for-kafka-events.md).
+
 Ground rules: virtual money and simulated prices only; non-commercial; written from scratch.
