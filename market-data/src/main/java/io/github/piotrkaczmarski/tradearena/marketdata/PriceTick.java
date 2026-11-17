@@ -11,7 +11,7 @@ public record PriceTick(
         Instant timestamp,
         int schemaVersion) {
 
-    private static final int CURRENT_SCHEMA_VERSION = 1;
+    public static final int CURRENT_SCHEMA_VERSION = 1;
 
     public PriceTick {
         Objects.requireNonNull(price, "price");
