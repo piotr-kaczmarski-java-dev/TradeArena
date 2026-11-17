@@ -25,7 +25,7 @@ Acceptance:
 
 Consider: schema evolution, a schema registry as one more piece of infrastructure, debuggability with the console consumer, payload size, what a small learning project actually needs.
 
-- [ ] ADR written and committed
+- [x] ADR written and committed
 
 ## Task 3 - Kafka producer (`market-data`)
 
