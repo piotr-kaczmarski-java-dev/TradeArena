@@ -10,11 +10,11 @@ public class InstrumentTest {
 
     @ParameterizedTest
     @CsvSource({
-            "'AAPL', 10.0",
-            "'GOOG', 100.0",
-            "'MSFT', 0.01",
-            "'TSLA', 1.0",
-            "'AMZN', 999.99"
+            "'GAMS', 10.0",
+            "'CMPS', 100.0",
+            "'BOKS', 0.01",
+            "'TOYS', 1.0",
+            "'FUDS', 999.99"
     })
     public void correctParametersConstructCorrectInstrument(String symbol, double startingPrice) {
         Instrument instrument = new Instrument(symbol, startingPrice);
@@ -27,9 +27,9 @@ public class InstrumentTest {
             ", 10.0",
             "'', 10.0",
             "'   ', 10.0",
-            "'AAPL', NaN",
-            "'AAPL', Infinity",
-            "'AAPL', -Infinity"
+            "'GAMS', NaN",
+            "'GAMS', Infinity",
+            "'GAMS', -Infinity"
     })
     public void constructorThrowsExceptionForInvalidParameters(String symbol, double startingPrice) {
         assertThrows(IllegalArgumentException.class, () -> new Instrument(symbol, startingPrice));
@@ -37,9 +37,9 @@ public class InstrumentTest {
 
     @ParameterizedTest
     @CsvSource({
-            "'AAPL', 0.0",
-            "'AAPL', 0.009",
-            "'AAPL', -1.0"
+            "'GAMS', 0.0",
+            "'GAMS', 0.009",
+            "'GAMS', -1.0"
     })
     public void constructorThrowsExceptionForStartingPriceBelowThreshold(String symbol, double startingPrice) {
         assertThrows(IllegalArgumentException.class, () -> new Instrument(symbol, startingPrice));
