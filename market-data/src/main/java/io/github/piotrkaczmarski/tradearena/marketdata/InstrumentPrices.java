@@ -24,14 +24,13 @@ public class InstrumentPrices {
     private final RandomGenerator randomGenerator;
 
     private final TreeMap<String, Double> prices;
-    private final double sigmaPerSqrtHour;
+    private final TreeMap<String, Instrument> instruments;
     private final Duration dt;
 
     public InstrumentPrices(
             Set<Instrument> instruments,
             Clock clock,
             RandomGenerator randomGenerator,
-            double sigmaPerSqrtHour,
             Duration dt) {
 
         Objects.requireNonNull(instruments, "instruments must not be null");
@@ -40,9 +39,6 @@ public class InstrumentPrices {
         }
         Objects.requireNonNull(clock, "clock must not be null");
         Objects.requireNonNull(randomGenerator, "randomGenerator must not be null");
-        if (!Double.isFinite(sigmaPerSqrtHour) || sigmaPerSqrtHour < 0) {
-            throw new IllegalArgumentException("sigmaPerSqrtHour must be finite and non-negative");
-        }
         Objects.requireNonNull(dt, "dt must not be null");
         if (!dt.isPositive()) {
             throw new IllegalArgumentException("dt must be positive");
@@ -54,37 +50,42 @@ public class InstrumentPrices {
             throw new IllegalArgumentException("instruments must not contain duplicates");
         }
 
+        this.instruments = new TreeMap<>(
+                instruments.stream()
+                        .collect(Collectors.toMap(Instrument::symbol, i -> i)));
+
         this.clock = clock;
         this.randomGenerator = randomGenerator;
-        this.sigmaPerSqrtHour = sigmaPerSqrtHour;
-        this.prices = new TreeMap<>(instruments.stream()
-                .collect(
-                        Collectors.toMap(Instrument::symbol, Instrument::startingPrice)));
+        this.prices = new TreeMap<>(
+                instruments.stream()
+                        .collect(
+                                Collectors.toMap(Instrument::symbol, Instrument::startingPrice)));
         this.dt = dt;
     }
 
     public List<PriceTick> tick() {
-        for (String instrument : prices.keySet()) {
-            double currentPrice = prices.get(instrument);
-            double randomShock = randomGenerator.nextGaussian();
+        for (String ticker : prices.keySet()) {
+            double currentPrice = prices.get(ticker);
 
+            Instrument instrument = instruments.get(ticker);
             double newPrice = STEP.nextPrice(
                     currentPrice,
-                    sigmaPerSqrtHour,
+                    instrument.sigmaPerSqrtHour(),
                     dt,
-                    randomShock);
-
-            prices.put(instrument, newPrice);
+                    randomGenerator.nextGaussian(),
+                    instrument.driftPerHour());
+            prices.put(ticker, newPrice);
         }
 
         Instant timestamp = clock.instant();
 
         return prices.entrySet().stream()
-                .map(entry -> new PriceTick(
-                        entry.getKey(),
-                        BigDecimal.valueOf(entry.getValue()).setScale(2, RoundingMode.HALF_UP),
-                        timestamp,
-                        PriceTick.CURRENT_SCHEMA_VERSION))
+                .map(
+                        entry -> new PriceTick(
+                                entry.getKey(),
+                                BigDecimal.valueOf(entry.getValue()).setScale(2, RoundingMode.HALF_UP),
+                                timestamp,
+                                PriceTick.CURRENT_SCHEMA_VERSION))
                 .collect(Collectors.toList());
     }
 }

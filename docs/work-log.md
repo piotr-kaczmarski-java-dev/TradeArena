@@ -60,3 +60,11 @@ This log is a deliverable: revision notes before interviews, and the honest answ
 - Interview question this answers: "How do you change an event schema without breaking consumers - and without a schema registry?" (add optional fields only, expand-contract, golden-file tests). Also: "Where should validation live, and why fail at construction rather than on first use?"
 - Rejected from AI suggestions, and why: nothing rejected this time.
 - Next: replace the real tickers in `InstrumentTest`; finish Task 1 - drift, occasional shocks, tests "prices stay positive over many steps" and "a shock happens with a forced random source"; then Task 3 - the Kafka producer (golden-file test for `PriceTick` by hand).
+
+## 2026-11-18 - Drift and per-instrument parameters
+- Built: drift term in the price simulator, per-instrument sigma and drift, tests.
+- Written by me / by the assistant: I wrote all the code and tests. Assistant: hints and reviews.
+- Learned: proper separation of concerns in test cases, and how to prepare expectations so that they can be easily tested.
+- Interview question this answers: "How do you unit-test numeric code without re-implementing the formula in the test?" (isolate one term - sigma = 0 for drift; choose inputs with a known answer like ln 2 -> doubling; compare doubles with a tolerance). Also: "Why does a log-normal model subtract sigma^2/2, and what's the difference between mean and median growth?"
+- Rejected from AI suggestions, and why: nothing. My own idea of player trades moving the simulated price is deferred to Phase 4 (bots) - the order book will give market impact for free, and a simulator rule would be exploitable.
+- Next: fix the drift/shock mix-up in the `nextPrice` comment, rename `CANCEL_DRIFT`, add an Ito-correction test, update Javadoc and the exception message; then shocks (forced-shock test) and "prices stay positive over many steps".

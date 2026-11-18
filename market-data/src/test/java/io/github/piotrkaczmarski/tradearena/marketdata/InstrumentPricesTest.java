@@ -30,9 +30,9 @@ class InstrumentPricesTest {
     private static final Duration DT = Duration.ofSeconds(1);
 
     private static final Set<Instrument> INSTRUMENTS = Set.of(
-            new Instrument("GAMS", 100.0d),
-            new Instrument("CMPS", 150.0d),
-            new Instrument("BOKS", 400.0d));
+            new Instrument("GAMS", 100.0d, SIGMA_PER_SQRT_HOUR, 0.0d),
+            new Instrument("CMPS", 150.0d, SIGMA_PER_SQRT_HOUR, 0.0d),
+            new Instrument("BOKS", 400.0d, SIGMA_PER_SQRT_HOUR, 0.0d));
 
     // --- determinism ---
 
@@ -67,7 +67,7 @@ class InstrumentPricesTest {
      */
     @Test
     void realizedVolatilityMatchesSigma() {
-        InstrumentPrices prices = newPrices(Set.of(new Instrument("GAMS", 100.0d)), 7L);
+        InstrumentPrices prices = newPrices(Set.of(new Instrument("GAMS", 100.0d, SIGMA_PER_SQRT_HOUR, 0.0d)), 7L);
         int ticks = 2_000;
 
         double previous = 100.0d;
@@ -92,10 +92,11 @@ class InstrumentPricesTest {
 
     @Test
     void ticksAreOrderedByInstrumentRegardlessOfInputOrder() {
-        Set<Instrument> reverseOrder = new LinkedHashSet<>(List.of(
-                new Instrument("GAMS", 100.0d),
-                new Instrument("CMPS", 150.0d),
-                new Instrument("BOKS", 400.0d)));
+        Set<Instrument> reverseOrder = new LinkedHashSet<>(
+                List.of(
+                        new Instrument("GAMS", 100.0d, SIGMA_PER_SQRT_HOUR, 0.0d),
+                        new Instrument("CMPS", 150.0d, SIGMA_PER_SQRT_HOUR, 0.0d),
+                        new Instrument("BOKS", 400.0d, SIGMA_PER_SQRT_HOUR, 0.0d)));
 
         List<PriceTick> ticks = newPrices(reverseOrder, 42L).tick();
 
@@ -132,10 +133,11 @@ class InstrumentPricesTest {
         // Different starting prices make these two records unequal, so the Set keeps
         // both.
         Set<Instrument> duplicates = Set.of(
-                new Instrument("GAMS", 100.0d),
-                new Instrument("GAMS", 101.0d));
+                new Instrument("GAMS", 100.0d, SIGMA_PER_SQRT_HOUR, 0.0d),
+                new Instrument("GAMS", 101.0d, SIGMA_PER_SQRT_HOUR, 0.0d));
 
-        IllegalArgumentException e = assertThrows(IllegalArgumentException.class,
+        IllegalArgumentException e = assertThrows(
+                IllegalArgumentException.class,
                 () -> newPrices(duplicates, 42L));
         assertMessageContains(e, "duplicates");
     }
@@ -147,71 +149,65 @@ class InstrumentPricesTest {
      */
     @Test
     void constructorRejectsEmptyInstrumentSet() {
-        IllegalArgumentException e = assertThrows(IllegalArgumentException.class,
+        IllegalArgumentException e = assertThrows(
+                IllegalArgumentException.class,
                 () -> newPrices(Set.of(), 42L));
         assertMessageContains(e, "instruments");
     }
 
     @Test
     void acceptsInstrumentWithMinimumStartingPrice() {
-        Set<Instrument> instruments = Set.of(new Instrument("GAMS", 0.01d));
+        Set<Instrument> instruments = Set.of(new Instrument("GAMS", 0.01d, SIGMA_PER_SQRT_HOUR, 0.0d));
 
         assertDoesNotThrow(() -> newPrices(instruments, 42L));
     }
 
     @Test
     void constructorRejectsNullClock() {
-        NullPointerException e = assertThrows(NullPointerException.class, () -> new InstrumentPrices(
-                INSTRUMENTS,
-                null,
-                new SplittableRandom(42L),
-                SIGMA_PER_SQRT_HOUR,
-                DT));
+        NullPointerException e = assertThrows(
+                NullPointerException.class,
+                () -> new InstrumentPrices(
+                        INSTRUMENTS,
+                        null,
+                        new SplittableRandom(42L),
+                        DT));
         assertMessageContains(e, "clock");
     }
 
     @Test
     void constructorRejectsNullGenerator() {
-        NullPointerException e = assertThrows(NullPointerException.class, () -> new InstrumentPrices(
-                INSTRUMENTS,
-                FIXED_CLOCK,
-                null,
-                SIGMA_PER_SQRT_HOUR,
-                DT));
+        NullPointerException e = assertThrows(
+                NullPointerException.class,
+                () -> new InstrumentPrices(
+                        INSTRUMENTS,
+                        FIXED_CLOCK,
+                        null,
+                        DT));
         assertMessageContains(e, "randomGenerator");
-    }
-
-    @Test
-    void constructorRejectsInvalidSigma() {
-        IllegalArgumentException e = assertThrows(IllegalArgumentException.class, () -> new InstrumentPrices(
-                INSTRUMENTS,
-                FIXED_CLOCK,
-                new SplittableRandom(42L),
-                -0.1d,
-                DT));
-        assertMessageContains(e, "sigmaPerSqrtHour");
     }
 
     @ParameterizedTest(name = "dt = {0} s")
     @ValueSource(longs = { 0L, -1L })
     void constructorRejectsNonPositiveDt(long seconds) {
-        IllegalArgumentException e = assertThrows(IllegalArgumentException.class, () -> new InstrumentPrices(
-                INSTRUMENTS,
-                FIXED_CLOCK,
-                new SplittableRandom(42L),
-                SIGMA_PER_SQRT_HOUR,
-                Duration.ofSeconds(seconds)));
+        IllegalArgumentException e = assertThrows(
+                IllegalArgumentException.class,
+                () -> new InstrumentPrices(
+                        INSTRUMENTS,
+                        FIXED_CLOCK,
+                        new SplittableRandom(42L),
+                        Duration.ofSeconds(seconds)));
         assertMessageContains(e, "dt");
     }
 
     @Test
     void constructorRejectsNullDt() {
-        NullPointerException e = assertThrows(NullPointerException.class, () -> new InstrumentPrices(
-                INSTRUMENTS,
-                FIXED_CLOCK,
-                new SplittableRandom(42L),
-                SIGMA_PER_SQRT_HOUR,
-                null));
+        NullPointerException e = assertThrows(
+                NullPointerException.class,
+                () -> new InstrumentPrices(
+                        INSTRUMENTS,
+                        FIXED_CLOCK,
+                        new SplittableRandom(42L),
+                        null));
         assertMessageContains(e, "dt");
     }
 
@@ -232,7 +228,6 @@ class InstrumentPricesTest {
                 instruments,
                 FIXED_CLOCK,
                 new SplittableRandom(seed),
-                SIGMA_PER_SQRT_HOUR,
                 DT);
     }
 
@@ -250,7 +245,8 @@ class InstrumentPricesTest {
 
     private static void assertMessageContains(Throwable e, String expected) {
         String message = e.getMessage();
-        assertTrue(message != null && message.contains(expected),
+        assertTrue(
+                message != null && message.contains(expected),
                 () -> "expected message containing \"" + expected + "\" but was: " + message);
     }
 
